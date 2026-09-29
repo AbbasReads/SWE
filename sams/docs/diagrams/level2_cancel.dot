@@ -1,0 +1,22 @@
+digraph L2c { rankdir=TB; ranksep=0.9; nodesep=0.6;
+  graph [fontname="Noto Sans", fontsize=12, bgcolor="white", pad=0.3, nodesep=0.5, ranksep=1.1, splines=true];
+  node  [fontname="Noto Sans", fontsize=16, color="#18181B", fontcolor="#18181B", penwidth=1.3];
+  edge  [fontname="Noto Sans", fontsize=15, color="#52525B", fontcolor="#52525B", arrowsize=0.7, penwidth=1.1];
+  SP [shape=box, style="filled", fillcolor="#F4F4F5", width=1.8, height=0.7, label="Sales Person"];
+  P41 [shape=circle, style="filled", fillcolor="#FFF1F2", color="#9F1239", fixedsize=true, width=1.75, label=<<FONT POINT-SIZE="13" COLOR="#9F1239">4.1</FONT><BR/>Fetch ticket<BR/>(lock)>];
+  P42 [shape=circle, style="filled", fillcolor="#FFF1F2", color="#9F1239", fixedsize=true, width=1.75, label=<<FONT POINT-SIZE="13" COLOR="#9F1239">4.2</FONT><BR/>Days before<BR/>show>];
+  P43 [shape=circle, style="filled", fillcolor="#FFF1F2", color="#9F1239", fixedsize=true, width=1.75, label=<<FONT POINT-SIZE="13" COLOR="#9F1239">4.3</FONT><BR/>Apply<BR/>refund rule>];
+  P44 [shape=circle, style="filled", fillcolor="#FFF1F2", color="#9F1239", fixedsize=true, width=1.75, label=<<FONT POINT-SIZE="13" COLOR="#9F1239">4.4</FONT><BR/>Update ticket,<BR/>release seat>];
+  D2 [shape=plaintext, label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" COLOR="#71717A"><TR><TD SIDES="TBL" BGCOLOR="#F4F4F5"><B>D2</B></TD><TD SIDES="TB" WIDTH="110" ALIGN="LEFT">Shows</TD></TR></TABLE>>];
+  D3 [shape=plaintext, label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" COLOR="#71717A"><TR><TD SIDES="TBL" BGCOLOR="#F4F4F5"><B>D3</B></TD><TD SIDES="TB" WIDTH="110" ALIGN="LEFT">Tickets</TD></TR></TABLE>>];
+  SP -> P41  [label="ticket no, date"];
+  D3 -> P41  [label="ticket"];
+  P41 -> P42 [label="ticket"];
+  D2 -> P42  [label="show date"];
+  P42 -> P43 [label="days left, class"];
+  P43 -> P44 [label="refund"];
+  P44 -> D3  [label="CANCELLED, refund"];
+  P44 -> SP [label="refund amount", constraint=false];
+  {rank=same; SP; P41; P42}
+  {rank=same; D2; D3; P43; P44}
+}
