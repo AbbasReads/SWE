@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block body %}
+<h1 class="noprint">Tickets</h1>
+<div class="tickets">
+{% for t in tickets %}
+  <div class="ticket">
+    <div class="muted">Students' Auditorium · Ticket #{{ t.ticket_id }}</div>
+    <div class="seat">{{ t.seat_no }}</div>
+    <dl>
+      <dt>Show</dt><dd>{{ show.title }}</dd>
+      <dt>Date</dt><dd>{{ show.date }} · {{ show.timing }}</dd>
+      <dt>Class</dt><dd>{{ t.category|capitalize }}</dd>
+      <dt>Price</dt><dd>{{ t.price|rs }}</dd>
+      <dt>Status</dt><dd>{{ t.status|capitalize }}</dd>
+    </dl>
+  </div>
+{% endfor %}
+</div>
+<button class="noprint" onclick="window.print()">Print</button>
+{% endblock %}

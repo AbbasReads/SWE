@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Book tickets</h1>
+<form method="post" class="card">
+  <div class="fields">
+    <label style="grid-column: 1 / -1">Show <select name="show">{% for s in shows %}
+      <option value="{{ s.show_id }}">{{ s.title }} · {{ s.date }} {{ s.timing }} — balcony {{ s.get_seat_availability('balcony') }} left @ Rs {{ '%.0f' % s.balcony_price }}, ordinary {{ s.get_seat_availability('ordinary') }} left @ Rs {{ '%.0f' % s.ordinary_price }}</option>
+    {% endfor %}</select></label>
+    <label>Seat type <select name="category"><option value="balcony">Balcony</option><option value="ordinary">Ordinary</option></select></label>
+    <label>Quantity <input name="qty" type="number" min="1" value="1" required></label>
+  </div>
+  <button>Book &amp; print</button>
+</form>
+{% endblock %}

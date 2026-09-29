@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Cancel ticket</h1>
+<form method="post" class="card">
+  <div class="fields">
+    <label>Ticket # <input name="ticket_id" type="number" required></label>
+    <label>Cancel date <input name="cancel_date" type="date" value="{{ today }}" required></label>
+  </div>
+  <button>Cancel &amp; refund</button>
+  <p class="muted" style="margin: 14px 0 0; font-size: 13px">Refund: 3+ clear days − Rs 5 · 3 to 1 days − Rs 10 ordinary / Rs 15 balcony · last day − 50%</p>
+</form>
+<form class="card inline" onsubmit="location='{{ url_for('sales_cancel') }}'.replace('cancel', 'ticket/') + this.t.value; return false;">
+  <label>Reprint ticket # <input name="t" type="number" required></label>
+  <button class="ghost">Open</button>
+</form>
+{% endblock %}

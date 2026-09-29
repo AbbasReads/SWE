@@ -1,0 +1,43 @@
+{% macro link(endpoint, text) -%}
+  <a href="{{ url_for(endpoint) }}" class="{{ 'active' if request.endpoint == endpoint }}">{{ text }}</a>
+{%- endmacro %}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SAMS</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="{{ url_for('home') }}">SAMS</a>
+    <nav>
+      {{ link('availability', 'Availability') }}
+      {% if session.role == 'manager' %}
+        {{ link('manager_shows', 'Shows') }}
+        {{ link('manager_salespersons', 'Sales Persons') }}
+        {{ link('manager_stats', 'Statistics') }}
+        {{ link('manager_balance', 'Balance Sheets') }}
+      {% elif session.role == 'sales' %}
+        {{ link('sales_book', 'Book') }}
+        {{ link('sales_cancel', 'Cancel') }}
+      {% elif session.role == 'clerk' %}
+        {{ link('clerk_expenditure', 'Expenditure') }}
+      {% endif %}
+    </nav>
+    <div class="user">
+      {% if session.role %}{{ session.name }} · <a href="{{ url_for('logout') }}">Log out</a>
+      {% else %}<a href="{{ url_for('login') }}">Log in</a>{% endif %}
+    </div>
+  </div>
+</header>
+<main class="wrap">
+  {% for category, m in get_flashed_messages(with_categories=true) %}
+    <div class="flash {{ category }}">{{ m }}</div>
+  {% endfor %}
+  {% block body %}{% endblock %}
+</main>
+</body>
+</html>

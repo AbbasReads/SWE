@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% macro booked(s, c) -%}
+  {% set p = s.get_booked_percentage(c) %}<span class="meter"><i style="width: {{ p }}%"></i></span>{{ '%.1f' % p }}%
+{%- endmacro %}
+{% block body %}
+<h1>Show statistics</h1>
+<div class="card table-wrap">
+<table>
+  <tr><th>Show</th><th>Date / time</th><th>Balcony booked</th><th class="num">Collected</th><th>Ordinary booked</th><th class="num">Collected</th><th class="num">Total</th></tr>
+  {% for s in shows %}
+  <tr><td>{{ s.title }}</td><td>{{ s.date }} {{ s.timing }}</td>
+      {% for c in categories %}<td>{{ booked(s, c) }}</td><td class="num">{{ s.get_collection(c)|rs }}</td>{% endfor %}
+      <td class="num"><b>{{ s.get_total_collection()|rs }}</b></td></tr>
+  {% else %}<tr><td colspan="7" class="muted">No shows yet</td></tr>{% endfor %}
+</table>
+</div>
+{% endblock %}

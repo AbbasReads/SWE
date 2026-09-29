@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Show expenditure</h1>
+<form method="post" class="card">
+  <div class="fields">
+    <label>Show <select name="show">{% for s in shows %}<option value="{{ s.show_id }}">{{ s.title }} · {{ s.date }} {{ s.timing }}</option>{% endfor %}</select></label>
+    <label>Type <select name="type"><option>Artist fee</option><option>Electricity</option><option>Staff</option><option>Other</option></select></label>
+    <label>Description <input name="description"></label>
+    <label>Amount (Rs) <input name="amount" type="number" step="0.01" required></label>
+  </div>
+  <button>Record</button>
+</form>
+<div class="card table-wrap">
+<table>
+  <tr><th>Date</th><th>Show</th><th>Type</th><th>Description</th><th class="num">Amount</th></tr>
+  {% for e in exps %}
+  <tr><td>{{ e.date }}</td><td>{{ titles[e.show_id] }}</td><td>{{ e.type }}</td><td class="muted">{{ e.description }}</td><td class="num">{{ e.amount|rs }}</td></tr>
+  {% else %}<tr><td colspan="5" class="muted">Nothing recorded yet</td></tr>{% endfor %}
+</table>
+</div>
+{% endblock %}

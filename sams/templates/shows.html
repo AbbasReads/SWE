@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Shows</h1>
+<div class="card table-wrap">
+<table>
+  <tr><th>Show</th><th>Date</th><th>Time</th><th class="num">Balcony</th><th class="num">Ordinary</th><th class="num">Complimentary</th><th>Prices (balcony / ordinary)</th></tr>
+  {% for s in shows %}
+  <tr><td>{{ s.title }}</td><td>{{ s.date }}</td><td>{{ s.timing }}</td>
+      <td class="num">{{ s.balcony_seats_for_sale }}</td><td class="num">{{ s.ordinary_seats_for_sale }}</td>
+      <td class="num">{{ s.comp_balcony }} / {{ s.comp_ordinary }}</td>
+      <td><form method="post" action="{{ url_for('set_prices', show_id=s.show_id) }}" class="inline">
+        <input class="small" name="balcony_price" value="{{ '%.0f' % s.balcony_price }}">
+        <input class="small" name="ordinary_price" value="{{ '%.0f' % s.ordinary_price }}">
+        <button class="ghost">Update</button></form></td></tr>
+  {% else %}<tr><td colspan="7" class="muted">No shows yet</td></tr>{% endfor %}
+</table>
+</div>
+
+<form method="post" class="card">
+  <h2>New show</h2>
+  <div class="fields">
+    <label>Title <input name="title" required></label>
+    <label>Date <input name="date" type="date" required></label>
+    <label>Timings <input name="timings" placeholder="10:00, 18:00" required></label>
+  </div>
+  <div class="fields">
+    <label>Balcony seats for sale <input name="balcony_seats" type="number" min="0" max="200" required></label>
+    <label>Ordinary seats for sale <input name="ordinary_seats" type="number" min="0" max="1000" required></label>
+    <label>Complimentary balcony <input name="comp_balcony" type="number" min="0" value="0"></label>
+    <label>Complimentary ordinary <input name="comp_ordinary" type="number" min="0" value="0"></label>
+  </div>
+  <div class="fields">
+    <label>Balcony price (Rs) <input name="balcony_price" type="number" step="0.01" required></label>
+    <label>Ordinary price (Rs) <input name="ordinary_price" type="number" step="0.01" required></label>
+  </div>
+  <button>Save show</button>
+</form>
+{% endblock %}

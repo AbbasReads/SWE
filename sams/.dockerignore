@@ -1,0 +1,4 @@
+__pycache__/
+*.db
+test_models.py
+README.md

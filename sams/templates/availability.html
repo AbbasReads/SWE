@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Seat availability</h1>
+<div class="card table-wrap">
+<table>
+  <tr><th>Show</th><th>Date</th><th>Time</th><th class="num">Balcony</th><th class="num">Price</th><th class="num">Ordinary</th><th class="num">Price</th></tr>
+  {% for s in shows %}
+  <tr><td>{{ s.title }}</td><td>{{ s.date }}</td><td>{{ s.timing }}</td>
+      <td class="num">{{ s.get_seat_availability('balcony') }}</td><td class="num">Rs {{ '%.0f' % s.balcony_price }}</td>
+      <td class="num">{{ s.get_seat_availability('ordinary') }}</td><td class="num">Rs {{ '%.0f' % s.ordinary_price }}</td></tr>
+  {% else %}<tr><td colspan="7" class="muted">No upcoming shows</td></tr>{% endfor %}
+</table>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Students' Auditorium</h1>
+<div class="tiles">
+  <a class="tile" href="{{ url_for('availability') }}"><b>Seat availability</b><span>Balcony and ordinary seats left</span></a>
+  {% if session.role == 'manager' %}
+    <a class="tile" href="{{ url_for('manager_shows') }}"><b>Shows</b><span>Dates, timings, seats, prices</span></a>
+    <a class="tile" href="{{ url_for('manager_salespersons') }}"><b>Sales persons</b><span>Accounts, collection, commission</span></a>
+    <a class="tile" href="{{ url_for('manager_stats') }}"><b>Statistics</b><span>% booked and amount collected</span></a>
+    <a class="tile" href="{{ url_for('manager_balance') }}"><b>Balance sheets</b><span>Per show and yearly</span></a>
+  {% elif session.role == 'sales' %}
+    <a class="tile" href="{{ url_for('sales_book') }}"><b>Book tickets</b><span>Sell and print tickets</span></a>
+    <a class="tile" href="{{ url_for('sales_cancel') }}"><b>Cancel ticket</b><span>Refund per cancellation rules</span></a>
+  {% elif session.role == 'clerk' %}
+    <a class="tile" href="{{ url_for('clerk_expenditure') }}"><b>Expenditure</b><span>Record show expenses</span></a>
+  {% else %}
+    <a class="tile" href="{{ url_for('login') }}"><b>Staff log in</b><span>Manager, sales person, clerk</span></a>
+  {% endif %}
+</div>
+{% endblock %}

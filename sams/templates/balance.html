@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Balance sheets</h1>
+<div class="card">
+  <form class="inline">
+    <label>Show <select name="show">{% for s in shows %}<option value="{{ s.show_id }}" {{ 'selected' if request.args.show == s.show_id|string }}>{{ s.title }} · {{ s.date }} {{ s.timing }}</option>{% endfor %}</select></label>
+    <button>View</button>
+  </form>
+  <form class="inline" style="margin-top: 12px">
+    <label>Year <input name="year" type="number" value="{{ request.args.year or this_year }}"></label>
+    <button>View</button>
+  </form>
+</div>
+{% if sheet %}
+<div class="card">
+  <h2>{{ sheet.title }}</h2>
+  <table>
+    <tr><td>Income (ticket sales, net of refunds)</td><td class="num">{{ sheet.total_income|rs }}</td></tr>
+    <tr><td>Sales commission</td><td class="num">− {{ sheet.commission|rs }}</td></tr>
+    <tr><td>Expenditure</td><td class="num">− {{ sheet.total_expenditure|rs }}</td></tr>
+    <tr class="total"><td>Net balance</td><td class="num">{{ sheet.net_balance|rs }}</td></tr>
+  </table>
+</div>
+{% endif %}
+{% endblock %}
